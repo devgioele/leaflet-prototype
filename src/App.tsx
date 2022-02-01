@@ -1,25 +1,30 @@
-import logo from 'logo.svg';
-import 'App.css';
+import Map from 'Map';
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div
+      style={{
+        display: 'flex',
+        flexFlow: 'column nowrap',
+        justifyContent: 'center',
+        color: '#ffffff',
+        textAlign: 'center',
+        height: '100%',
+      }}
+    >
+      <header
+        style={{
+          flex: '1',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <p style={{ fontSize: 'xx-large' }}>Leaflet + React = ❤️</p>
       </header>
+      <main style={{ flex: '8 0 auto', padding: '2%', paddingTop: '0px' }}>
+        <Map />
+      </main>
     </div>
   );
 }
-
-export default App;
