@@ -10,3 +10,5 @@ The current features are of interest:
 - Choose color of each polygon based on its properties in the shapefile
 - Highlight a polygon
 - Move the map such that a specific polygon is on a certain posisition on the screen (e.g. in the upper left corner)
+- Show a loading indicator
+- Show a custom legend
