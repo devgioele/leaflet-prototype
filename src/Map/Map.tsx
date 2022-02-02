@@ -8,6 +8,7 @@ import L, {
   StyleFunction,
   GeoJSON as LeafletGeoJSON,
   Polyline,
+  Map as LeafletMap,
 } from 'leaflet';
 import { Feature, Geometry } from 'geojson';
 import { useRef, useState } from 'react';
@@ -46,6 +47,7 @@ const getColor = (d: number) => {
 };
 
 export default function Map() {
+  const mapRef = useRef<LeafletMap>();
   const geoJsonRef = useRef<LeafletGeoJSON>(null);
   const [highlight, setHighlight] = useState<HighlightState>({
     highlighted: false,
@@ -61,8 +63,11 @@ export default function Map() {
     fillColor: getColor(feature?.properties.density),
   });
 
-  const zoomToFeature = (feature: Polyline) =>
-    map.fitBounds(feature.getBounds());
+  const zoomToFeature = (feature: Polyline) => {
+    if (mapRef.current) {
+      mapRef.current.fitBounds(feature.getBounds());
+    }
+  };
 
   const highlightFeature = (feature: Polyline) => {
     feature.setStyle({
@@ -112,6 +117,9 @@ export default function Map() {
   return (
     <div style={{ height: '100%' }}>
       <MapContainer
+        whenCreated={(mapInstance) => {
+          mapRef.current = mapInstance;
+        }}
         center={[37.8, -96]}
         zoom={4}
         scrollWheelZoom={false}
