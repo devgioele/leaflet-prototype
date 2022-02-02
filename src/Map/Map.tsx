@@ -70,10 +70,7 @@ export default function Map() {
       dashArray: '',
       fillOpacity: 0.7,
     });
-    // TODO: Examine why some browsers don't work
-    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-      feature.bringToFront();
-    }
+    feature.bringToFront();
     zoomToFeature(feature);
   };
 
