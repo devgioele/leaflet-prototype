@@ -49,10 +49,7 @@ const getColor = (d: number) => {
 export default function Map() {
   const mapRef = useRef<LeafletMap>();
   const geoJsonRef = useRef<LeafletGeoJSON>(null);
-  const [highlight, setHighlight] = useState<HighlightState>({
-    highlighted: false,
-    target: undefined,
-  });
+  const highlightedRef = useRef<Polyline>();
 
   const style: StyleFunction = (feature) => ({
     weight: 2,
@@ -63,11 +60,8 @@ export default function Map() {
     fillColor: getColor(feature?.properties.density),
   });
 
-  const zoomToFeature = (feature: Polyline) => {
-    if (mapRef.current) {
-      mapRef.current.fitBounds(feature.getBounds());
-    }
-  };
+  const zoomToFeature = (feature: Polyline) =>
+    mapRef.current?.fitBounds(feature.getBounds());
 
   const highlightFeature = (feature: Polyline) => {
     feature.setStyle({
@@ -87,29 +81,22 @@ export default function Map() {
     geoJsonRef.current?.resetStyle(feature);
   };
 
-  const toggleHighlight: LeafletMouseEventHandlerFn = (e) => {
-    setHighlight((prevHighlight) => {
-      if (e.target !== prevHighlight.target) {
-        /* If a defined target has been clicked, highlight it,
-        otherwise remove the highlight from the prev target
-        */
-        const newHighlight: HighlightState = {
-          highlighted: !!e.target,
-          target: e.target,
-        };
-        if (newHighlight.highlighted) {
-          highlightFeature(e.target);
-        } else {
-          removeHighlight(prevHighlight.target);
-        }
-        return newHighlight;
+  const toggleHighlight = (e: any) => {
+    // If a new feature has been clicked
+    if (e.target !== highlightedRef.current) {
+      // Remove highlight from previous feature, if any
+      if (highlightedRef.current) {
+        removeHighlight(highlightedRef.current);
       }
-      return prevHighlight;
-    });
+      // Highlight new feature
+      highlightFeature(e.target);
+      highlightedRef.current = e.target;
+    }
   };
 
   const onEachFeature = (feature: Feature<Geometry, any>, layer: Layer) => {
     layer.on({
+      // click: (e) => highlightFeature(e.target),
       click: toggleHighlight,
     });
   };
@@ -122,7 +109,7 @@ export default function Map() {
         }}
         center={[37.8, -96]}
         zoom={4}
-        scrollWheelZoom={false}
+        scrollWheelZoom
         style={{ height: '100%', width: '100%' }}
       >
         <TileLayer
