@@ -2,24 +2,18 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
 import 'leaflet-defaulticon-compatibility';
 import { MapContainer, TileLayer, GeoJSON, Polygon } from 'react-leaflet';
-import L, {
+import {
   Layer,
-  LeafletMouseEventHandlerFn,
   StyleFunction,
   GeoJSON as LeafletGeoJSON,
   Polyline,
   Map as LeafletMap,
 } from 'leaflet';
 import { Feature, Geometry } from 'geojson';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import usStates from 'constants/usStates';
 
 // See Leaflet's example: https://leafletjs.com/examples/choropleth
-
-type HighlightState = {
-  highlighted: boolean;
-  target: any | undefined;
-};
 
 const getColor = (d: number) => {
   if (d > 1000) {
@@ -93,7 +87,6 @@ export default function Map() {
 
   const onEachFeature = (feature: Feature<Geometry, any>, layer: Layer) => {
     layer.on({
-      // click: (e) => highlightFeature(e.target),
       click: toggleHighlight,
     });
   };
@@ -104,8 +97,8 @@ export default function Map() {
         whenCreated={(mapInstance) => {
           mapRef.current = mapInstance;
         }}
-        center={[37.8, -96]}
-        zoom={4}
+        center={[45, -96]}
+        zoom={3}
         scrollWheelZoom
         style={{ height: '100%', width: '100%' }}
       >
