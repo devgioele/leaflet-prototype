@@ -15,7 +15,8 @@ html {
   box-sizing: inherit;
 }
 
-html, body { 
+html,
+body {
   height: 100%;
   margin: 0;
   background-color: #282c34;
@@ -33,11 +34,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-p {
-  /* To avoid vertical margins collapse */
-  /* margin: 0px; */
 }
 
 #root {

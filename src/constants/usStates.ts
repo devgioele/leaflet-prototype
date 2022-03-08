@@ -1,5 +1,3 @@
-import { GeoJsonObject } from 'geojson';
-
 const usStates: GeoJSON.FeatureCollection = {
   type: 'FeatureCollection',
   features: [

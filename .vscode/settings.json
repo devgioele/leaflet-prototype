@@ -1,9 +1,15 @@
 {
+  // Editor
+  "editor.bracketPairColorization.enabled": true,
+  // - ESLint
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
+  // - Prettier
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.bracketPairColorization.enabled": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": false,
+  // Typescript
   "typescript.updateImportsOnFileMove.enabled": "always",
   "typescript.preferences.importModuleSpecifier": "non-relative"
 }
